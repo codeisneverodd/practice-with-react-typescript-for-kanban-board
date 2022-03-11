@@ -6,16 +6,16 @@ import {taskState} from "../models/atoms";
 import TrashCan from "../components/TrashCan";
 import AddBoard from "../components/AddBoard";
 import {useEffect} from "react";
-import {saveTodos} from "../models/localStorage";
+import {saveLocal} from "../models/localStorage";
 
 const Boards = styled.div`
   display: flex;
+  flex-grow: 1;
   overflow-x: scroll;
   align-items: baseline;
 `
 const Grid = styled.div`
   display: flex;
-  margin-left: 215px;
   flex-direction: column;
 `
 
@@ -81,7 +81,7 @@ function Home() {
         }
     }
     useEffect(() => {
-        saveTodos(tasks)
+        saveLocal(tasks)
     }, [tasks])
     return (
         <>
@@ -92,10 +92,11 @@ function Home() {
                         <Grid ref={provided.innerRef} {...provided.droppableProps}>
                             <Boards>
                                 {Object.keys(tasks).map((boardId, index) =>
-                                    <Board key={boardId} index={index} boardId={boardId} tasks={tasks[boardId]}/>)}
+                                    <Board key={boardId} index={index} boardId={boardId}
+                                           tasks={tasks[boardId]}/>)}
                                 <AddBoard/>
                             </Boards>
-                            {/*{provided.placeholder}*/}
+                            {provided.placeholder}
                         </Grid>
                     )}
                 </Droppable>
