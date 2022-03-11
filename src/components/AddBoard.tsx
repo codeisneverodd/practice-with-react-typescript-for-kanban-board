@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import {useForm} from "react-hook-form";
-import {useRecoilState, useRecoilValue} from "recoil";
-import {boardColorSelector, taskState} from "../models/atoms";
+import {useRecoilValue, useSetRecoilState} from "recoil";
+import {nextColorGetter, taskState} from "../models/atoms";
 
 const Form = styled.form`
   width: 100%
@@ -40,20 +40,20 @@ const Input = styled.input<{ boardColor: string }>`
 `
 
 function AddBoard() {
-    const [tasks, setTasks] = useRecoilState(taskState)
-    const boardColor = useRecoilValue(boardColorSelector)
+    const setTasks = useSetRecoilState(taskState)
+    const nextColor = useRecoilValue(nextColorGetter)
     const {register, handleSubmit, setValue} = useForm<IForm>()
     const onValid = ({boardId}: IForm) => {
         setTasks(allTasks => ({
             ...allTasks,
-            [boardId + "+" + Date.now()]: []
+            [boardId + "-" + nextColor + "-" + Date.now()]: [],
         }))
         setValue("boardId", "")
     }
     return (
         <Wrapper>
             <Form onSubmit={handleSubmit(onValid)}>
-                <Input boardColor={boardColor} autoComplete={"off"} {...register("boardId", {required: true})}
+                <Input boardColor={nextColor} autoComplete={"off"} {...register("boardId", {required: true})}
                        placeholder={"+ New Board"}/>
             </Form>
         </Wrapper>
