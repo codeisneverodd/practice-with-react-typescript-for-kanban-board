@@ -10,26 +10,27 @@ export interface ITaskState {
     [key: string]: ITask[];
 }
 
-export const boardColorState = atom({
-    key: "boardColor",
+export const boardColorList = atom({
+    key: "boardColorList",
     default: ["#2ecc71", "#e67e22", "#e74c3c", "#2c3e50", "#8e44ad", "#16a085", "#f39c12"]
 })
 //emerald, carrot, alizarin, midnightBlue, wisteria, greenSea, orange
 
+
 export const taskState = atom<ITaskState>({
     key: "tasks",
     default: loadTasks() ?? {
-        completed: [],
-        inProgress: [],
-        notStarted: [],
+        "Completed-#2ecc71-1234512345123": [],
+        "In progress-#e67e22-1234512345123": [],
+        "Not started-#e74c3c-1234512345123": [],
     }
 })
 
-export const boardColorSelector = selector({
-    key: "boardColorSelector",
+export const nextColorGetter = selector({
+    key: "nextColorSelector",
     get: ({get}) => {
-        const boardColor = get(boardColorState)
+        const boardColor = get(boardColorList)
         const boards = get(taskState)
         return boardColor[Object.keys(boards).length % boardColor.length]
-    }
+    },
 })
