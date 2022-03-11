@@ -32,7 +32,7 @@ const Handle = styled.div`
   height: 57px;
   align-items: baseline;
 `
-const Header = styled.div`
+const Header = styled.div<{ boardColor: string }>`
   width: 122px;
   margin-left: 10px;
   font-size: 13px;
@@ -40,7 +40,7 @@ const Header = styled.div`
   line-height: 2;
   padding: 2px 4px;
   border-radius: 5px;
-  background-color: #2ECC71;
+  background-color: ${props => props.boardColor ?? "#333333"};
 `
 const Input = styled.input`
   width: 274px;
@@ -58,7 +58,13 @@ const Input = styled.input`
   }
 `
 
-function Board({boardId, tasks, index}: { boardId: string, tasks: ITask[], index: number }) {
+interface IBoard {
+    boardId: string,
+    tasks: ITask[],
+    index: number
+}
+
+function Board({boardId, tasks, index}: IBoard) {
     const setTasks = useSetRecoilState(taskState)
     const {register, handleSubmit, setValue} = useForm<IForm>()
     const onValid = ({task}: IForm) => {
@@ -69,12 +75,14 @@ function Board({boardId, tasks, index}: { boardId: string, tasks: ITask[], index
         }))
         setValue("task", "")
     }
+    console.log(boardId.slice(boardId.length - 21, boardId.length - 14))
     return (
         <Draggable draggableId={boardId} index={index}>
             {(provided) => (
                 <Wrapper ref={provided.innerRef} {...provided.draggableProps}>
                     <Handle {...provided.dragHandleProps}>
-                        <Header>{boardId.slice(0, boardId.length - 14)}</Header>
+                        <Header
+                            boardColor={boardId.slice(boardId.length - 21, boardId.length - 14)}>{boardId.slice(0, boardId.length - 22)}</Header>
                     </Handle>
                     <Droppable droppableId={boardId}>
                         {(provided) => (
