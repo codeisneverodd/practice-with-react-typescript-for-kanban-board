@@ -1,30 +1,45 @@
 import styled from "styled-components";
 import {Droppable} from "react-beautiful-dnd";
+import React from "react";
 
 const Wrapper = styled.div`
   display: flex;
-  height: 400px;
-  flex-direction: row;
-  background-color: antiquewhite;
+  height: 200px;
+  flex-direction: column;
+  background-color: tomato;
   margin: 40px;
 `
-const Area = styled.div`
+const TrashCanCard = styled.div`
+  width: 1000px;
+  background-color: aqua;
+  flex-grow: 3;
+`
+const TrashCanBoard = styled.div`
+  width: 1000px;
+  background-color: blueviolet;
   flex-grow: 1;
 `
+
 
 function TrashCan() {
     return (
         <Wrapper>
-            <div>TrashCan</div>
-            <Droppable droppableId={"trashCan"}>
+            <Droppable droppableId={"trashCanBoard"} type={"boards"}>
                 {(provided) => (
-                    <Area ref={provided.innerRef} {...provided.droppableProps}>
+                    <TrashCanBoard ref={provided.innerRef} {...provided.droppableProps}>
                         {provided.placeholder}
-                    </Area>
+                    </TrashCanBoard>
+                )}
+            </Droppable>
+            <Droppable droppableId={"trashCanCard"}>
+                {(provided) => (
+                    <TrashCanCard ref={provided.innerRef} {...provided.droppableProps}>
+                        {provided.placeholder}
+                    </TrashCanCard>
                 )}
             </Droppable>
         </Wrapper>
     )
 }
 
-export default TrashCan
+export default React.memo(TrashCan)
