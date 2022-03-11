@@ -10,6 +10,6 @@ export const loadTasks = () => {
     return null;
 };
 
-export const saveTodos = (todos: ITaskState) => {
-    localStorage.setItem(LOCAL_TASK_STATE, JSON.stringify(todos));
+export const saveLocal = (tasks: ITaskState) => {
+    localStorage.setItem(LOCAL_TASK_STATE, JSON.stringify(tasks));
 };
