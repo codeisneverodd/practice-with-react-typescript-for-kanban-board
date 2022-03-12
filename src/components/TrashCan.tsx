@@ -6,18 +6,21 @@ const Wrapper = styled.div`
   display: flex;
   height: 200px;
   flex-direction: column;
-  background-color: tomato;
   margin: 40px;
 `
 const TrashCanCard = styled.div`
-  width: 1000px;
-  background-color: aqua;
+  width: 100%;
+  background-color: ${props => props.theme.trashCanColor};
   flex-grow: 3;
 `
 const TrashCanBoard = styled.div`
-  width: 1000px;
-  background-color: blueviolet;
+  width: 100%;
+  background-color: ${props => props.theme.trashCanColor};
   flex-grow: 1;
+`
+const Text = styled.div`
+  text-align: center;
+  line-height: 2;
 `
 
 
@@ -28,6 +31,7 @@ function TrashCan() {
                 {(provided) => (
                     <TrashCanBoard ref={provided.innerRef} {...provided.droppableProps}>
                         {provided.placeholder}
+                        <Text>REMOVE BOARD</Text>
                     </TrashCanBoard>
                 )}
             </Droppable>
@@ -35,6 +39,7 @@ function TrashCan() {
                 {(provided) => (
                     <TrashCanCard ref={provided.innerRef} {...provided.droppableProps}>
                         {provided.placeholder}
+                        <Text>REMOVE TASK</Text>
                     </TrashCanCard>
                 )}
             </Droppable>
