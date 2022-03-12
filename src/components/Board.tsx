@@ -20,12 +20,14 @@ interface IForm {
     task: string;
 }
 
-const Area = styled.div`
+const Area = styled.div<{ isDraggingOver: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: 10px;
+  row-gap: 2px;
   flex-grow: 1;
+  min-height: 400px;
+  background-color: ${props => props.isDraggingOver ? props.theme.boardDraggingOverColor : "none"};
 `
 const Handle = styled.div`
   height: 57px;
@@ -44,15 +46,19 @@ const Header = styled.div<{ boardColor: string }>`
 const Input = styled.input`
   width: 274px;
   padding: 10px 22px 10px 22px;
-  background-color: ${props => props.theme.taskColor};
-  border-radius: 5px;
+  border-style: solid;
+  border-color: #FFFFFF00;
+  background-color: inherit;
   font-size: 14px;
   line-height: 2;
   text-align: left;
   color: ${props => props.theme.textColor};
+  outline: none;
 
-  &:focus {
-    outline: none
+  &:hover, &:focus {
+    outline: none;
+    border-radius: 5px;
+    background-color: ${props => props.theme.newTaskColor};
   }
 
   &::placeholder {
@@ -77,7 +83,6 @@ function Board({boardId, tasks, index}: IBoard) {
         }))
         setValue("task", "")
     }
-    console.log(boardId.slice(boardId.length - 21, boardId.length - 14))
     return (
         <Draggable draggableId={boardId} index={index}>
             {(provided) => (
@@ -87,14 +92,16 @@ function Board({boardId, tasks, index}: IBoard) {
                             boardColor={boardId.slice(boardId.length - 21, boardId.length - 14)}>{boardId.slice(0, boardId.length - 22)}</Header>
                     </Handle>
                     <Droppable droppableId={boardId}>
-                        {(provided) => (
-                            <Area ref={provided.innerRef} {...provided.droppableProps}>
+                        {(provided, snapshot) => (
+                            <Area ref={provided.innerRef} {...provided.droppableProps}
+                                  isDraggingOver={snapshot.isDraggingOver}>
                                 {tasks.map((task, index) => <Task key={task.id} id={task.id} index={index}
                                                                   text={task.text}/>)}
                                 {provided.placeholder}
                                 <Form onSubmit={handleSubmit(onValid)}>
-                                    <Input autoComplete={"off"} {...register("task", {required: true})}
-                                           placeholder={"+ New"}/>
+                                    <Input
+                                        autoComplete={"off"} {...register("task", {required: true})}
+                                        placeholder={"+ New"}/>
                                 </Form>
                             </Area>
                         )}
