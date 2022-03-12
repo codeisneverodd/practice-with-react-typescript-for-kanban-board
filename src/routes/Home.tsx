@@ -1,119 +1,128 @@
 import Board from "../components/Board";
-import {DragDropContext, Droppable, DropResult} from "react-beautiful-dnd";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import styled from "styled-components";
-import {useRecoilState, useSetRecoilState} from "recoil";
-import {draggingState, taskState} from "../models/atoms";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { draggingState, taskState } from "../models/atoms";
 import AddBoard from "../components/AddBoard";
-import {useEffect, useRef, useState} from "react";
-import {saveLocal} from "../models/localStorage";
+import { useEffect, useRef, useState } from "react";
+import { saveTasks } from "../models/localStorage";
 import TrashCanTask from "../components/TrashCanTask";
 
-const Boards = styled.div`
-  display: flex;
-  //overflow-x: auto;
-  align-items: baseline;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`
-const Grid = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
-`
+`;
+const Boards = styled.div`
+  display: flex;
+  align-items: baseline;
+`;
 
 function Home() {
-    const setDragging = useSetRecoilState(draggingState)
-    const [tasks, setTasks] = useRecoilState(taskState)
-    const boardWidthRef = useRef<HTMLDivElement>(null)
-    const [trashCanWidth, setTrashCanWidth] = useState(1000)
-    const onDragEnd = (dropResult: DropResult) => {
-        const {source, destination, draggableId, type} = dropResult
-        if (!destination) return
-        if (type === "boards") {
-            if (source.droppableId === destination?.droppableId) {
-                setTasks(allTasks => {
-                    let entries = Object.entries(allTasks)
-                    const [temp] = entries.splice(source.index, 1)
-                    entries.splice(destination.index, 0, temp);
-                    return entries.reduce((r, [k, v]) => ({...r, [k]: v}), {})
-                })
-            } else if (destination?.droppableId === "trashCanBoard") {
-                setTasks(allTasks => {
-                    let entries = Object.entries(allTasks)
-                    entries.splice(source.index, 1)
-                    return entries.reduce((r, [k, v]) => ({...r, [k]: v}), {})
-                })
-            } else {
-                return
-            }
-        } else {
-            //Same board
-            if (source.droppableId === destination?.droppableId) {
-                setTasks(allTasks => {
-                    let result = [...allTasks[destination.droppableId]]
-                    const grabbed = result[source.index]
-                    result.splice(source.index, 1)
-                    result.splice(destination?.index, 0, grabbed)
-                    return {
-                        ...allTasks,
-                        [destination?.droppableId]: result,
-                    }
-                })
-            } else if (destination?.droppableId === "trashCanCard") {
-                setTasks(allTasks => {
-                    let sourceBoard = [...allTasks[source.droppableId]]
-                    sourceBoard.splice(source.index, 1)
-                    return {
-                        ...allTasks,
-                        [source.droppableId]: sourceBoard,
-                    }
-                })
-                setDragging(false)
-            } else if (source?.droppableId !== destination?.droppableId) {
-                setTasks(allTasks => {
-                    let sourceBoard = [...allTasks[source.droppableId]]
-                    let destinationBoard = [...allTasks[destination?.droppableId]]
-                    const grabbed = sourceBoard[source.index]
-                    sourceBoard.splice(source.index, 1)
-                    destinationBoard.splice(destination?.index, 0, grabbed)
-                    return {
-                        ...allTasks,
-                        [source.droppableId]: sourceBoard,
-                        [destination?.droppableId]: destinationBoard,
-                    }
-                })
-            }
-        }
+  const [tasks, setTasks] = useRecoilState(taskState);
+  const setDragging = useSetRecoilState(draggingState);
+  const [trashCanWidth, setTrashCanWidth] = useState(1000);
+  const boardWidthRef = useRef<HTMLDivElement>(null);
+
+  const onDragEnd = (dropResult: DropResult) => {
+    const { source, destination, type } = dropResult;
+    if (!destination) return;
+    if (type === "boards") {
+      if (source.droppableId === destination?.droppableId) {
+        // Move Boards
+        setTasks((allTasks) => {
+          let boardEntries = Object.entries(allTasks);
+          const [sourceBoard] = boardEntries.splice(source.index, 1);
+          boardEntries.splice(destination.index, 0, sourceBoard);
+          return boardEntries.reduce(
+            (modifiedBoards, [boardId, tasks]) => ({
+              ...modifiedBoards,
+              [boardId]: tasks,
+            }),
+            {}
+          );
+        });
+      }
+    } else {
+      // Move Tasks
+      if (source.droppableId === destination?.droppableId) {
+        // Move a task in same board.
+        setTasks((allTasks) => {
+          let reOrderedTasks = [...allTasks[destination.droppableId]];
+          const sourceTask = reOrderedTasks[source.index];
+          reOrderedTasks.splice(source.index, 1);
+          reOrderedTasks.splice(destination?.index, 0, sourceTask);
+          return {
+            ...allTasks,
+            [destination?.droppableId]: reOrderedTasks,
+          };
+        });
+      } else if (destination?.droppableId === "trashCanCard") {
+        // Move task to trash
+        setTasks((allTasks) => {
+          let modifiedTasks = [...allTasks[source.droppableId]];
+          modifiedTasks.splice(source.index, 1);
+          return {
+            ...allTasks,
+            [source.droppableId]: modifiedTasks,
+          };
+        });
+        setDragging(false); // To show trashCan area
+      } else if (source?.droppableId !== destination?.droppableId) {
+        // Move task to different board
+        setTasks((allTasks) => {
+          let modifiedSourceTasks = [...allTasks[source.droppableId]];
+          let modifiedDestinationTasks = [
+            ...allTasks[destination?.droppableId],
+          ];
+          const sourceTask = modifiedSourceTasks[source.index];
+          modifiedSourceTasks.splice(source.index, 1);
+          modifiedDestinationTasks.splice(destination?.index, 0, sourceTask);
+          return {
+            ...allTasks,
+            [source.droppableId]: modifiedSourceTasks,
+            [destination?.droppableId]: modifiedDestinationTasks,
+          };
+        });
+      } else {
+        return;
+      }
     }
-    useEffect(() => {
-        saveLocal(tasks)
-        setTrashCanWidth(boardWidthRef?.current ? boardWidthRef?.current?.offsetWidth : 1000)
-    }, [tasks])
-    return (
-        <>
-            <DragDropContext onDragEnd={onDragEnd}>
-                <TrashCanTask width={trashCanWidth}/>
-                <Droppable droppableId={"boards"} type={"boards"} direction={"horizontal"}>
-                    {(provided) => (
-                        <Grid ref={provided.innerRef} {...provided.droppableProps}>
-                            {/*<TrashCanBoard/>*/}
-                            <Boards ref={boardWidthRef}>
-                                {Object.keys(tasks).map((boardId, index) =>
-                                    <Board key={boardId} index={index} boardId={boardId}
-                                           tasks={tasks[boardId]}/>)}
-
-                                <AddBoard index={Object.keys(tasks).length}/>
-
-                            </Boards>
-                            {provided.placeholder}
-                        </Grid>
-                    )}
-                </Droppable>
-
-            </DragDropContext>
-        </>
-    )
+  };
+  useEffect(() => {
+    saveTasks(tasks);
+    setTrashCanWidth(
+      boardWidthRef?.current ? boardWidthRef?.current?.offsetWidth : 1000
+    );
+  }, [tasks]);
+  return (
+    <>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <TrashCanTask width={trashCanWidth} />
+        <Droppable
+          droppableId={"boards"}
+          type={"boards"}
+          direction={"horizontal"}
+        >
+          {(provided) => (
+            <Wrapper ref={provided.innerRef} {...provided.droppableProps}>
+              <Boards ref={boardWidthRef}>
+                {Object.keys(tasks).map((boardId, index) => (
+                  <Board
+                    key={boardId}
+                    index={index}
+                    boardId={boardId}
+                    tasks={tasks[boardId]}
+                  />
+                ))}
+                <AddBoard index={Object.keys(tasks).length} />
+              </Boards>
+              {provided.placeholder}
+            </Wrapper>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </>
+  );
 }
 
-export default Home
+export default Home;
