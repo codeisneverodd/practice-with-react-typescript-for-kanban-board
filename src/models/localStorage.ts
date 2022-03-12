@@ -17,7 +17,7 @@ export const loadColorCount = () => {
     const json = JSON.parse(localTasks);
     return json.count + 1;
   }
-  return null;
+  return 3;
 };
 
 export const saveTasks = (tasks: ITaskState) => {
