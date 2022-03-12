@@ -3,16 +3,14 @@ import {DragDropContext, Droppable, DropResult} from "react-beautiful-dnd";
 import styled from "styled-components";
 import {useRecoilState, useSetRecoilState} from "recoil";
 import {draggingState, taskState} from "../models/atoms";
-import TrashCan from "../components/TrashCanTask";
 import AddBoard from "../components/AddBoard";
-import {useEffect} from "react";
+import {useEffect, useRef, useState} from "react";
 import {saveLocal} from "../models/localStorage";
-import TrashCanBoard from "../components/TrashCanBoard";
+import TrashCanTask from "../components/TrashCanTask";
 
 const Boards = styled.div`
   display: flex;
-  flex-grow: 1;
-  overflow-x: auto;
+  //overflow-x: auto;
   align-items: baseline;
 
   &::-webkit-scrollbar {
@@ -27,6 +25,8 @@ const Grid = styled.div`
 function Home() {
     const setDragging = useSetRecoilState(draggingState)
     const [tasks, setTasks] = useRecoilState(taskState)
+    const boardWidthRef = useRef<HTMLDivElement>(null)
+    const [trashCanWidth, setTrashCanWidth] = useState(1000)
     const onDragEnd = (dropResult: DropResult) => {
         const {source, destination, draggableId, type} = dropResult
         if (!destination) return
@@ -88,26 +88,29 @@ function Home() {
     }
     useEffect(() => {
         saveLocal(tasks)
+        setTrashCanWidth(boardWidthRef?.current ? boardWidthRef?.current?.offsetWidth : 1000)
     }, [tasks])
     return (
         <>
             <DragDropContext onDragEnd={onDragEnd}>
-                <TrashCan/>
+                <TrashCanTask width={trashCanWidth}/>
                 <Droppable droppableId={"boards"} type={"boards"} direction={"horizontal"}>
                     {(provided) => (
                         <Grid ref={provided.innerRef} {...provided.droppableProps}>
-                            <TrashCanBoard/>
-                            <Boards>
+                            {/*<TrashCanBoard/>*/}
+                            <Boards ref={boardWidthRef}>
                                 {Object.keys(tasks).map((boardId, index) =>
                                     <Board key={boardId} index={index} boardId={boardId}
                                            tasks={tasks[boardId]}/>)}
 
                                 <AddBoard index={Object.keys(tasks).length}/>
+
                             </Boards>
                             {provided.placeholder}
                         </Grid>
                     )}
                 </Droppable>
+
             </DragDropContext>
         </>
     )
