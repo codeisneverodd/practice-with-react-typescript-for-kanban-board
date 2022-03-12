@@ -25,6 +25,7 @@ const Wrapper = styled.div<{ isDragging: boolean }>`
   }
 `;
 const Text = styled.span`
+  word-break: break-all;
   font-size: 14px;
   line-height: 2;
   text-align: left;
