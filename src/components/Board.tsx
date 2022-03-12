@@ -21,8 +21,8 @@ const Wrapper = styled.div`
   // Wrapping Handle, Area
   display: flex;
   flex-direction: column;
-  width: 322px;
-  padding-left: 200px;
+  width: 318px;
+  padding-left: 100px;
 `;
 const Handle = styled.div`
   // Handle of board when dragging
