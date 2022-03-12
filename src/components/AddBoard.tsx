@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {useForm} from "react-hook-form";
 import {useRecoilValue, useSetRecoilState} from "recoil";
 import {nextColorGetter, taskState} from "../models/atoms";
+import {Draggable} from "react-beautiful-dnd";
 
 const Form = styled.form`
   width: 100%
@@ -43,7 +44,7 @@ const Error = styled.div`
   text-align: left;
 `
 
-function AddBoard() {
+function AddBoard({index}: { index: number }) {
     const setTasks = useSetRecoilState(taskState)
     const nextColor = useRecoilValue(nextColorGetter)
     const {register, handleSubmit, setValue, formState: {errors}} = useForm<IForm>()
@@ -55,20 +56,25 @@ function AddBoard() {
         setValue("boardId", "")
     }
     return (
-        <Wrapper>
-            <Form onSubmit={handleSubmit(onValid)}>
-                <Input boardColor={nextColor} autoComplete={"off"} {...register("boardId", {
-                    required: true,
-                    maxLength: {
-                        value: 10,
-                        message: "It must be less than 10 characters"
-                    }
-                })}
-                       placeholder={"+ New Board"}/>
-                <Error>{errors?.boardId?.message}</Error>
-            </Form>
-        </Wrapper>
+        <Draggable draggableId={"addBoard"} index={index}>
+            {(provided) => (
+                <Wrapper ref={provided.innerRef} {...provided.draggableProps}{...provided.dragHandleProps}>
+                    <Form onSubmit={handleSubmit(onValid)}>
+                        <Input boardColor={nextColor} autoComplete={"off"} {...register("boardId", {
+                            required: true,
+                            maxLength: {
+                                value: 15,
+                                message: "It must be less than 15 characters"
+                            }
+                        })}
+                               placeholder={"+ New Board"}/>
+                        <Error>{errors?.boardId?.message}</Error>
+                    </Form>
+                </Wrapper>
+            )}
+        </Draggable>
+
     )
 }
 
-export default AddBoard
+export default React.memo(AddBoard)
