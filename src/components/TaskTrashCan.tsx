@@ -6,10 +6,10 @@ import { draggingAtomState } from "../models/atoms";
 
 const Wrapper = styled.div<{ startDragging: boolean; width: number }>`
   display: flex;
-  width: ${(props) => props.width - 400 + "px"};
+  width: ${(props) => props.width - 350 + "px"};
   height: 200px;
   flex-direction: column;
-  margin: auto;
+  margin-left: 100px;
   border-radius: 0 0 20px 20px;
   background-color: ${(props) =>
     props.startDragging ? (props) => props.theme.trashCanColor : "none"};
