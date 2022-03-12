@@ -2,7 +2,7 @@ import Board from "../components/Board";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { draggingState, taskState } from "../models/atoms";
+import { draggingAtomState, taskState } from "../models/atoms";
 import AddBoard from "../components/AddBoard";
 import { useEffect, useRef, useState } from "react";
 import { saveTasks } from "../models/localStorage";
@@ -19,7 +19,7 @@ const Boards = styled.div`
 
 function Home() {
   const [tasks, setTasks] = useRecoilState(taskState);
-  const setDragging = useSetRecoilState(draggingState);
+  const setDraggingAtomState = useSetRecoilState(draggingAtomState);
   const [trashCanWidth, setTrashCanWidth] = useState(1000);
   const boardWidthRef = useRef<HTMLDivElement>(null);
 
@@ -66,7 +66,7 @@ function Home() {
             [source.droppableId]: modifiedTasks,
           };
         });
-        setDragging(false); // To show trashCan area
+        setDraggingAtomState(false); // To show trashCan area
       } else if (source?.droppableId !== destination?.droppableId) {
         // Move task to different board
         setTasks((allTasks) => {
