@@ -28,10 +28,10 @@ const Text = styled.div<{ isDraggingOver: boolean }>`
   line-height: 2;
 `;
 
-function TrashCanTask({ width }: { width: number }) {
-  const dragging = useRecoilValue(draggingAtomState);
+function TaskTrashCan({ width }: { width: number }) {
+  const isTaskDragging = useRecoilValue(draggingAtomState);
   return (
-    <Wrapper startDragging={dragging} width={width}>
+    <Wrapper startDragging={isTaskDragging} width={width}>
       <Droppable droppableId={"trashCanCard"}>
         {(provided, snapshot) => (
           <Area
@@ -48,4 +48,4 @@ function TrashCanTask({ width }: { width: number }) {
   );
 }
 
-export default React.memo(TrashCanTask);
+export default React.memo(TaskTrashCan);
