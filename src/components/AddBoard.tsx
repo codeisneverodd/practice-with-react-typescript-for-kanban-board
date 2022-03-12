@@ -38,11 +38,15 @@ const Input = styled.input<{ boardColor: string }>`
   color: inherit
 }
 `
+const Error = styled.div`
+  padding: 30px 10px 10px 10px;
+  text-align: left;
+`
 
 function AddBoard() {
     const setTasks = useSetRecoilState(taskState)
     const nextColor = useRecoilValue(nextColorGetter)
-    const {register, handleSubmit, setValue} = useForm<IForm>()
+    const {register, handleSubmit, setValue, formState: {errors}} = useForm<IForm>()
     const onValid = ({boardId}: IForm) => {
         setTasks(allTasks => ({
             ...allTasks,
@@ -53,8 +57,15 @@ function AddBoard() {
     return (
         <Wrapper>
             <Form onSubmit={handleSubmit(onValid)}>
-                <Input boardColor={nextColor} autoComplete={"off"} {...register("boardId", {required: true})}
+                <Input boardColor={nextColor} autoComplete={"off"} {...register("boardId", {
+                    required: true,
+                    maxLength: {
+                        value: 10,
+                        message: "It must be less than 10 characters"
+                    }
+                })}
                        placeholder={"+ New Board"}/>
+                <Error>{errors?.boardId?.message}</Error>
             </Form>
         </Wrapper>
     )
