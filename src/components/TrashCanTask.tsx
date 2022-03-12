@@ -4,8 +4,9 @@ import React from "react";
 import {useRecoilValue} from "recoil";
 import {draggingState} from "../models/atoms";
 
-const Wrapper = styled.div<{ startDragging: boolean }>`
+const Wrapper = styled.div<{ startDragging: boolean, width: number }>`
   display: flex;
+  width: ${props => props.width + "px"};
   height: 200px;
   flex-direction: column;
   margin: 40px;
@@ -23,10 +24,11 @@ const Text = styled.div<{ isDraggingOver: boolean }>`
 `
 
 
-function TrashCanTask() {
+function TrashCanTask({width}: { width: number }) {
     const dragging = useRecoilValue(draggingState)
+    console.log(width)
     return (
-        <Wrapper startDragging={dragging}>
+        <Wrapper startDragging={dragging} width={width}>
             <Droppable droppableId={"trashCanCard"}>
                 {(provided, snapshot) => (
                     <Area isDraggingOver={snapshot.isDraggingOver}
