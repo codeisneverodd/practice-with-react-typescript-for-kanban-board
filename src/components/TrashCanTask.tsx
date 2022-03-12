@@ -6,19 +6,22 @@ import {draggingState} from "../models/atoms";
 
 const Wrapper = styled.div<{ startDragging: boolean, width: number }>`
   display: flex;
-  width: ${props => props.width + "px"};
+  width: ${props => props.width - 400 + "px"};
   height: 200px;
   flex-direction: column;
-  margin: 40px;
-  background-color: ${props => props.startDragging ? 'tomato' : 'none'};
+  margin: auto;
+  border-radius: 0 0 20px 20px;
+  background-color: ${props => props.startDragging ? props => props.theme.trashCanColor : 'none'};
 `
 const Area = styled.div<{ isDraggingOver: boolean }>`
   width: 100%;
+  border-radius: 0 0 20px 20px;
   background-color: ${props => props.isDraggingOver ? props => props.theme.trashCanColor : 'none'};
   flex-grow: 1;
 `
 const Text = styled.div<{ isDraggingOver: boolean }>`
   display: ${props => props.isDraggingOver ? 'block' : 'none'};
+  font-size: 20px;
   text-align: center;
   line-height: 2;
 `
