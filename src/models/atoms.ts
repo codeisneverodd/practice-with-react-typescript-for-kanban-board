@@ -11,7 +11,7 @@ export interface ITaskState {
 }
 
 export const draggingAtomState = atom({
-  key: "draggingState",
+  key: "draggingAtomState",
   default: false,
 });
 
@@ -30,7 +30,7 @@ export const boardColorList = atom({
 //emerald, carrot, alizarin, midnightBlue, wisteria, greenSea, orange
 
 export const taskState = atom<ITaskState>({
-  key: "tasks",
+  key: "taskState",
   default: loadTasks() ?? {
     "Completed-#2ecc71-1234512345123": [],
     "In progress-#e67e22-1234512345123": [],
