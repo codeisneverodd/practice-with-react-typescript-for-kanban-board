@@ -4,13 +4,14 @@ import styled from "styled-components";
 import {ITask, taskState} from "../models/atoms";
 import {useForm} from "react-hook-form";
 import {useSetRecoilState} from "recoil";
-import React from "react";
+import React, {useRef} from "react";
+import binImg from "../images/bin.png"
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 322px;
-  padding: 24px;
+  padding-left: 200px;
 
 `
 const Form = styled.form`
@@ -35,19 +36,22 @@ const Handle = styled.div`
   flex-direction: row;
   justify-content: space-between;
   height: 57px;
-  align-items: baseline;
+  align-items: center;
 
-  button {
+  img {
     display: none;
+    width: 14px;
+    padding: 5px;
   }
 
   &:hover {
-    button {
+
+    img {
       display: block;
     }
   }
 `
-const Header = styled.div<{ boardColor: string }>`
+const Label = styled.div<{ boardColor: string }>`
   width: 122px;
   margin-left: 10px;
   font-size: 13px;
@@ -79,6 +83,15 @@ const Input = styled.input`
     color: inherit
   }
 `
+const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
+const LengthText = styled.div`
+  padding-left: 10px;
+  color: ${props => props.theme.textBlurColor}
+`
 
 interface IBoard {
     boardId: string,
@@ -87,6 +100,7 @@ interface IBoard {
 }
 
 function Board({boardId, tasks, index}: IBoard) {
+    const inputRef = useRef<HTMLFormElement>(null)
     const setTasks = useSetRecoilState(taskState)
     const {register, handleSubmit, setValue} = useForm<IForm>()
     const onValid = ({task}: IForm) => {
@@ -95,6 +109,8 @@ function Board({boardId, tasks, index}: IBoard) {
             ...allTasks,
             [boardId]: [newTask, ...allTasks[boardId]],
         }))
+        console.log(inputRef)
+        inputRef?.current?.focus()
         setValue("task", "")
     }
     const onClick = () => {
@@ -111,10 +127,13 @@ function Board({boardId, tasks, index}: IBoard) {
             {(provided) => (
                 <Wrapper ref={provided.innerRef} {...provided.draggableProps}>
                     <Handle {...provided.dragHandleProps}>
-                        <Header
-                            boardColor={boardId.slice(boardId.length - 21, boardId.length - 14)}>{boardId.slice(0, boardId.length - 22)}
+                        <Header>
+                            <Label
+                                boardColor={boardId.slice(boardId.length - 21, boardId.length - 14)}>{boardId.slice(0, boardId.length - 22)}
+                            </Label>
+                            <LengthText>{tasks.length}</LengthText>
                         </Header>
-                        <button onClick={onClick}>Erase</button>
+                        <img onClick={onClick} alt={"binImg"} src={binImg}/>
                     </Handle>
                     <Droppable droppableId={boardId}>
                         {(provided, snapshot) => (
@@ -123,7 +142,7 @@ function Board({boardId, tasks, index}: IBoard) {
                                 {tasks.map((task, index) => <Task key={task.id} id={task.id} index={index}
                                                                   text={task.text}/>)}
                                 {provided.placeholder}
-                                <Form onSubmit={handleSubmit(onValid)}>
+                                <Form onSubmit={handleSubmit(onValid)} ref={inputRef}>
                                     <Input
                                         autoComplete={"off"} {...register("task", {required: true})}
                                         placeholder={"+ New"}/>
