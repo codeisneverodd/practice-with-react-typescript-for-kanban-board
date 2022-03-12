@@ -13,6 +13,10 @@ const Boards = styled.div`
   flex-grow: 1;
   overflow-x: scroll;
   align-items: baseline;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 const Grid = styled.div`
   display: flex;
