@@ -14,6 +14,7 @@ const Wrapper = styled.div`
 `;
 const Boards = styled.div`
   display: flex;
+  flex-grow: 1;
   align-items: baseline;
 `;
 
@@ -103,8 +104,8 @@ function Home() {
           type={"boards"}
           direction={"horizontal"}
         >
-          {(provided) => (
-            <Wrapper ref={provided.innerRef} {...provided.droppableProps}>
+          {({ innerRef, droppableProps, placeholder }) => (
+            <Wrapper ref={innerRef} {...droppableProps}>
               <Boards ref={boardWidthRef}>
                 {Object.keys(tasks).map((boardId, index) => (
                   <Board
@@ -116,7 +117,7 @@ function Home() {
                 ))}
                 <AddBoard index={Object.keys(tasks).length} />
               </Boards>
-              {provided.placeholder}
+              {placeholder}
             </Wrapper>
           )}
         </Droppable>
