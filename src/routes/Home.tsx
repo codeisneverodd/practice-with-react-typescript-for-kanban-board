@@ -6,7 +6,7 @@ import { draggingAtomState, taskState } from "../models/atoms";
 import AddBoard from "../components/AddBoard";
 import { useEffect, useRef, useState } from "react";
 import { saveTasks } from "../models/localStorage";
-import TrashCanTask from "../components/TrashCanTask";
+import TaskTrashCan from "../components/TaskTrashCan";
 
 const Wrapper = styled.div`
   display: flex;
@@ -97,7 +97,7 @@ function Home() {
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
-        <TrashCanTask width={trashCanWidth} />
+        <TaskTrashCan width={trashCanWidth} />
         <Droppable
           droppableId={"boards"}
           type={"boards"}
