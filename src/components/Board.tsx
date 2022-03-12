@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   width: 322px;
   padding: 24px;
+
 `
 const Form = styled.form`
   width: 100%
@@ -30,8 +31,21 @@ const Area = styled.div<{ isDraggingOver: boolean }>`
   background-color: ${props => props.isDraggingOver ? props.theme.boardDraggingOverColor : "none"};
 `
 const Handle = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   height: 57px;
   align-items: baseline;
+
+  button {
+    display: none;
+  }
+
+  &:hover {
+    button {
+      display: block;
+    }
+  }
 `
 const Header = styled.div<{ boardColor: string }>`
   width: 122px;
@@ -89,7 +103,9 @@ function Board({boardId, tasks, index}: IBoard) {
                 <Wrapper ref={provided.innerRef} {...provided.draggableProps}>
                     <Handle {...provided.dragHandleProps}>
                         <Header
-                            boardColor={boardId.slice(boardId.length - 21, boardId.length - 14)}>{boardId.slice(0, boardId.length - 22)}</Header>
+                            boardColor={boardId.slice(boardId.length - 21, boardId.length - 14)}>{boardId.slice(0, boardId.length - 22)}
+                        </Header>
+                        <button>Erase</button>
                     </Handle>
                     <Droppable droppableId={boardId}>
                         {(provided, snapshot) => (
