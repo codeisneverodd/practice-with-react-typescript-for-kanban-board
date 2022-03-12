@@ -7,6 +7,9 @@ declare module 'styled-components' {
         textColor: string;
         bgColor: string;
         taskColor: string;
+        taskDraggingColor: string;
+        newTaskColor: string;
         trashCanColor: string;
+        boardDraggingOverColor: string;
     }
 }
