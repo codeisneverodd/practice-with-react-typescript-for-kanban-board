@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import {useForm} from "react-hook-form";
 import {useRecoilValue, useSetRecoilState} from "recoil";
-import {nextColorSelector, taskState} from "../models/atoms";
+import {boardColorList, taskState} from "../models/atoms";
 import {Draggable} from "react-beautiful-dnd";
+import {loadColorCount, saveColorCount} from "../models/localStorage";
 
 const Form = styled.form`
   width: 100%
@@ -46,13 +47,17 @@ const Error = styled.div`
 
 function AddBoard({index}: { index: number }) {
     const setTasks = useSetRecoilState(taskState)
-    const nextColor = useRecoilValue(nextColorSelector)
+    const colors = useRecoilValue(boardColorList)
+    const [colorCount, setColorCount] = useState(loadColorCount)
+    const nextColor = colors[colorCount % colors.length]
     const {register, handleSubmit, setValue, formState: {errors}} = useForm<IForm>()
     const onValid = ({boardId}: IForm) => {
         setTasks(allTasks => ({
             ...allTasks,
             [boardId + "-" + nextColor + "-" + Date.now()]: [],
         }))
+        setColorCount(colorCount + 1)
+        saveColorCount({count: colorCount})
         setValue("boardId", "")
     }
     return (
