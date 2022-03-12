@@ -1,8 +1,8 @@
 import Board from "../components/Board";
 import {DragDropContext, Droppable, DropResult} from "react-beautiful-dnd";
 import styled from "styled-components";
-import {useRecoilState} from "recoil";
-import {taskState} from "../models/atoms";
+import {useRecoilState, useSetRecoilState} from "recoil";
+import {draggingState, taskState} from "../models/atoms";
 import TrashCan from "../components/TrashCan";
 import AddBoard from "../components/AddBoard";
 import {useEffect} from "react";
@@ -11,8 +11,9 @@ import {saveLocal} from "../models/localStorage";
 const Boards = styled.div`
   display: flex;
   flex-grow: 1;
-  overflow-x: scroll;
+  overflow-x: auto;
   align-items: baseline;
+  padding-left: 200px;
 
   &::-webkit-scrollbar {
     display: none;
@@ -24,6 +25,7 @@ const Grid = styled.div`
 `
 
 function Home() {
+    const setDragging = useSetRecoilState(draggingState)
     const [tasks, setTasks] = useRecoilState(taskState)
     const onDragEnd = (dropResult: DropResult) => {
         const {source, destination, draggableId, type} = dropResult
@@ -62,12 +64,12 @@ function Home() {
                 setTasks(allTasks => {
                     let sourceBoard = [...allTasks[source.droppableId]]
                     sourceBoard.splice(source.index, 1)
-                    console.log("working")
                     return {
                         ...allTasks,
                         [source.droppableId]: sourceBoard,
                     }
                 })
+                setDragging(false)
             } else if (source?.droppableId !== destination?.droppableId) {
                 setTasks(allTasks => {
                     let sourceBoard = [...allTasks[source.droppableId]]
@@ -98,7 +100,8 @@ function Home() {
                                 {Object.keys(tasks).map((boardId, index) =>
                                     <Board key={boardId} index={index} boardId={boardId}
                                            tasks={tasks[boardId]}/>)}
-                                <AddBoard/>
+
+                                <AddBoard index={Object.keys(tasks).length}/>
                             </Boards>
                             {provided.placeholder}
                         </Grid>
