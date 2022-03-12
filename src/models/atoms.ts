@@ -10,6 +10,11 @@ export interface ITaskState {
     [key: string]: ITask[];
 }
 
+export const draggingState = atom({
+    key: "draggingState",
+    default: false
+})
+
 export const boardColorList = atom({
     key: "boardColorList",
     default: ["#2ecc71", "#e67e22", "#e74c3c", "#2c3e50", "#8e44ad", "#16a085", "#f39c12"]
