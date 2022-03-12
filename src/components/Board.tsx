@@ -11,7 +11,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   width: 322px;
   padding: 24px;
-  min-height: 684px;
 `
 const Form = styled.form`
   width: 100%
@@ -47,6 +46,9 @@ const Input = styled.input`
   padding: 10px 22px 10px 22px;
   background-color: ${props => props.theme.taskColor};
   border-radius: 5px;
+  font-size: 14px;
+  line-height: 2;
+  text-align: left;
   color: ${props => props.theme.textColor};
 
   &:focus {
