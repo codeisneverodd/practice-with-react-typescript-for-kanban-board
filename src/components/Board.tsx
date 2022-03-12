@@ -67,10 +67,10 @@ const TaskCount = styled.div`
   color: ${(props) => props.theme.textBlurColor};
 `;
 const DeleteImgButton = styled.img``;
-const Form = styled.form`
+const NewTaskForm = styled.form`
   width: 100%;
 `;
-const Input = styled.input`
+const NewTaskInput = styled.input`
   width: 274px;
   padding: 10px 22px 10px 22px;
   //styling
@@ -115,7 +115,7 @@ function Board({ boardId, tasks, index }: IBoard) {
   const setTasks = useSetRecoilState(taskState);
   const { register, handleSubmit, setValue } = useForm<IForm>();
   const onValid = ({ task }: IForm) => {
-    const newTask = { id: Date.now(), text: task }; // unique ID by Date.now()
+    const newTask = { id: Date.now(), text: task }; // unique ID for new task by Date.now()
     setTasks((allTasks) => ({
       ...allTasks,
       [boardId]: [newTask, ...allTasks[boardId]],
@@ -126,7 +126,10 @@ function Board({ boardId, tasks, index }: IBoard) {
     // Remove board
     if (
       window.confirm(
-        `️Are you sure to remove "${boardId.slice(0, boardId.length - 22)}" ⁉`
+        `️Are you sure to remove board "${boardId.slice(
+          0,
+          boardId.length - 22
+        )}" ⁉`
       )
     ) {
       setTasks((allTasks) => {
@@ -169,13 +172,13 @@ function Board({ boardId, tasks, index }: IBoard) {
                   />
                 ))}
                 {provided.placeholder}
-                <Form onSubmit={handleSubmit(onValid)}>
-                  <Input
+                <NewTaskForm onSubmit={handleSubmit(onValid)}>
+                  <NewTaskInput
                     autoComplete={"off"}
                     {...register("task", { required: true })}
                     placeholder={"+ New"}
                   />
-                </Form>
+                </NewTaskForm>
               </Area>
             )}
           </Droppable>
