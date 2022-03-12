@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import {useForm} from "react-hook-form";
 import {useRecoilValue, useSetRecoilState} from "recoil";
-import {nextColorGetter, taskState} from "../models/atoms";
+import {nextColorSelector, taskState} from "../models/atoms";
 import {Draggable} from "react-beautiful-dnd";
 
 const Form = styled.form`
@@ -46,7 +46,7 @@ const Error = styled.div`
 
 function AddBoard({index}: { index: number }) {
     const setTasks = useSetRecoilState(taskState)
-    const nextColor = useRecoilValue(nextColorGetter)
+    const nextColor = useRecoilValue(nextColorSelector)
     const {register, handleSubmit, setValue, formState: {errors}} = useForm<IForm>()
     const onValid = ({boardId}: IForm) => {
         setTasks(allTasks => ({
