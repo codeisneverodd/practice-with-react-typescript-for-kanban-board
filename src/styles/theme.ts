@@ -2,6 +2,7 @@ import {DefaultTheme} from "styled-components";
 
 export const darkTheme: DefaultTheme = {
     textColor: "#FFFFFF",
+    textBlurColor: "#B9B9B9",
     bgColor: "#383838",
     taskColor: "#212121",
     taskDraggingColor: "#494949",
