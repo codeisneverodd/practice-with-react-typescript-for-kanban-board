@@ -10,12 +10,12 @@ interface INewBoardForm {
   boardId: string;
 }
 
-const NewBoardForm = styled.form`
-  width: 100%;
-`;
 const Wrapper = styled.div`
   width: 400px;
-  margin: 40px;
+  margin-left: 100px;
+`;
+const NewBoardForm = styled.form`
+  width: 100%;
 `;
 const NewBoardInput = styled.input<{ boardColor: string }>`
   width: 122px;
