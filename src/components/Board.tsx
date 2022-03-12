@@ -97,6 +97,15 @@ function Board({boardId, tasks, index}: IBoard) {
         }))
         setValue("task", "")
     }
+    const onClick = () => {
+        if (window.confirm(`Are you sure deleting "${boardId.slice(0, boardId.length - 22)}"? `)) {
+            setTasks(allTasks => {
+                let entries = Object.entries(allTasks)
+                entries.splice(index, 1)
+                return entries.reduce((r, [k, v]) => ({...r, [k]: v}), {})
+            })
+        }
+    }
     return (
         <Draggable draggableId={boardId} index={index}>
             {(provided) => (
@@ -105,7 +114,7 @@ function Board({boardId, tasks, index}: IBoard) {
                         <Header
                             boardColor={boardId.slice(boardId.length - 21, boardId.length - 14)}>{boardId.slice(0, boardId.length - 22)}
                         </Header>
-                        <button>Erase</button>
+                        <button onClick={onClick}>Erase</button>
                     </Handle>
                     <Droppable droppableId={boardId}>
                         {(provided, snapshot) => (
