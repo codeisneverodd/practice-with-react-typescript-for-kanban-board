@@ -52,7 +52,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     border: 0;
     font-size: 100%;
-    
+
     font: inherit;
     vertical-align: baseline;
   }
@@ -68,6 +68,10 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${props => props.theme.bgColor};
     color: ${props => props.theme.textColor};
     font-family: 'Noto Sans KR', sans-serif;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   ol, ul {
