@@ -31,11 +31,12 @@ export const taskState = atom<ITaskState>({
     }
 })
 
-export const nextColorGetter = selector({
+
+export const nextColorSelector = selector({
     key: "nextColorSelector",
     get: ({get}) => {
         const boardColor = get(boardColorList)
-        const boards = get(taskState)
-        return boardColor[Object.keys(boards).length % boardColor.length]
+        const tasks = get(taskState)
+        return boardColor[Object.keys(tasks).length % 7 * Math.floor(Math.random() * 10) % 7]
     },
 })
