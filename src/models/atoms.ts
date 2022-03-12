@@ -6,6 +6,7 @@ export interface ITask {
     text: string;
 }
 
+
 export interface ITaskState {
     [key: string]: ITask[];
 }
