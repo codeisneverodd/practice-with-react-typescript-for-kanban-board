@@ -91,6 +91,10 @@ const NewTaskInput = styled.input`
     background-color: ${(props) => props.theme.newTaskColor};
   }
 
+  &:focus::placeholder {
+    color: transparent;
+  }
+
   &::placeholder {
     color: ${(props) => props.theme.textBlurColor};
   }
