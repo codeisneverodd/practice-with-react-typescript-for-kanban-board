@@ -1,7 +1,7 @@
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import React, { useEffect, useState } from "react";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { draggingAtomState } from "../models/atoms";
 
 interface IIndexedTask {
@@ -33,11 +33,12 @@ const Text = styled.span`
 
 function Task({ id, index, text }: IIndexedTask) {
   const [isDragging, setIsDragging] = useState(false);
-  const setDraggingAtomState = useSetRecoilState(draggingAtomState);
+  const [draggingState, setDraggingAtomState] =
+    useRecoilState(draggingAtomState);
   useEffect(() => {
     // prevent unlimited re-rendering
     setDraggingAtomState(isDragging);
-  }, [isDragging]);
+  }, [isDragging, draggingState]);
   return (
     <Draggable draggableId={id + ""} index={index}>
       {({ innerRef, draggableProps, dragHandleProps }, { isDragging }) => {
