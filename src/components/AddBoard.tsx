@@ -89,7 +89,6 @@ function AddBoard({ index }: { index: number }) {
     setValue("boardId", "");
   };
   useEffect(() => {
-    console.log(index);
     index > 4 ? setDisabled(true) : setDisabled(false);
   }, [index]);
   return (
