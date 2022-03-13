@@ -1,46 +1,146 @@
-# Getting Started with Create React App
+# Kanban Board
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![thumbnail-kanban-low-resolution](https://tva1.sinaimg.cn/large/e6c9d24egy1h07yud7uwdj21qe0qqwfm.jpg)](https://codeisneverodd.github.io/practice-with-react-typescript-for-kanban-board/)
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Languages](#languages)
+- [Frameworks & Libraries](#frameworks--libraries)
+- [Design Tools](#design-tools)
+- [Guides](#guides)
+    - [Make Skeleton Site](#make-skeleton-site)
+        - [Result of Skeleton](#result-of-skeleton)
 
-### `npm start`
+    - [Color the skeletons](#color-the-skeletons)
+        - [Result of Coloring](#result-of-coloring)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+    - [Deploy](#deploy)
+        - [Result of Deployment](#result-of-deployment)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Click & Check Result
 
-### `npm test`
+[![kanban-logo_160x160](https://tva1.sinaimg.cn/large/e6c9d24egy1h07zbwp8ugj204g04gjr9.jpg)](https://codeisneverodd.github.io/practice-with-react-typescript-for-kanban-board/)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Languages
 
-### `npm run build`
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white)](https://www.typescriptlang.org/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=black)](https://en.wikipedia.org/wiki/JavaScript)
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white)](https://en.wikipedia.org/wiki/HTML5)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white)](https://en.wikipedia.org/wiki/CSS)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Frameworks & Libraries
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+[![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black)](https://reactjs.org/)
+[![Recoil](https://img.shields.io/badge/Recoil-3578e5?style=for-the-badge&logo=ApexCharts.js&logoColor=white)](https://recoiljs.org/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Notable Packages
 
-### `npm run eject`
+[![react-beautiful-dnd](https://img.shields.io/badge/react_beautiful_dnd-4c90f7?style=for-the-badge&logo=react_beautiful_dnd&logoColor=white)](https://github.com/atlassian/react-beautiful-dnd)
+[![styledcomponents](https://img.shields.io/badge/styled_components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)](https://styled-components.com/)
+[![ReactHelmet](https://img.shields.io/badge/ReactHelmet-2FBCD9?style=for-the-badge&logo=ApexCharts.js&logoColor=white)](https://www.npmjs.com/package/react-helmet)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Design Tools
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+[![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=white)](https://www.figma.com/)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Guides
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Make Skeleton Site
 
-## Learn More
+1. Initialize project using Create React App, `npx create-react-app my-app --template typescript`.
+1. Delete useless files and erase all uselsess codes in them. In my case, delete all the files except `App.tsx`
+   and `index.tsx`.
+1. Create a directory called `models`.
+1. Create `atoms.ts` file in `models` directory and define global states.
+1. Install react-router-dom via npm, `npm i react-router-dom`.
+1. Install react-beautiful-dnd via npm, `npm i react-beautiful-dnd`.
+1. Create a directory called `routes`.
+1. Create `Home.tsx` file in `routes` directory and define `DragDropContext` and `Droppable` for `type={"boards"}`.
+1. Create `Router.tsx` file in root directory and define route for `Home.tsx`.
+1. Create a directory called `components`.
+1. Create `Board.tsx`, `Task.tsx`, `TaskTrashCan.tsx` and  `AddBoard.tsx` in `components` directory.
+1. Define `Board ` component as `Draggable`  in `Boards.tsx` and add `Droppable`  for tasks inside.
+1. Define `AddBoard` and `Task` component as `Draggable`  in `AddBoard.tsx` and  `Task.tsx` .
+1. Define `TaskTrashCan ` component as `Droppable`  in `TaskTrashCan.tsx` .
+1. Add `TaskTrashCan` below `DragDropContext` opening tag.
+1. Add `Board`  and `AddBoard` in the `Droppable` area of `type={"boards"}` in `Home`.
+1. Add `Task` in the `Droppable` area of default type in `Board`.
+1. Place all the parameters which are needed for drag and drop actions.
+1. Define function `onDragEnd` in `Home` and add logics for listing.
+1. Create `localStorage.ts` file in `models` directory and define functions for saving data in local storage.
+1. Add local storage saving logic in `Home`
+1. Add a button in the `Board` and define onClick event for deleting board. Done.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Result of Skeleton
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+> Please dont' care about the coloring things in this stage, just define components and drag&drop actions.
+
+![skeleton-of-kanban](https://tva1.sinaimg.cn/large/e6c9d24egy1h0817lx13bj21600ra0ui.jpg)
+
+### Color the skeletons
+
+1. Design it with design tools or something, in my case Figma.
+
+![component-group](https://tva1.sinaimg.cn/large/e6c9d24egy1h08267n4ilj210f08l754.jpg)
+
+![Home-Dark-Action](https://tva1.sinaimg.cn/large/e6c9d24egy1h0822xazxzj21600rat9m.jpg)
+
+![Home-Dark-NoAction](https://tva1.sinaimg.cn/large/e6c9d24egy1h0822w5qqxj21600radgi.jpg)
+
+2. Visit [Google Fonts](https://fonts.google.com/) and select the fonts you want to use. Copy the `<link>` to embed.
+3. Install react-helmet via npm,  `npm install --save react-helmet`.
+4. Add `Helmet` component above `Router` component and embed the link that we copied in step 2.
+5. Install styled-compents via npm,  `npm install --save styled-components`.
+6. Create a directory called `styles`.
+7. Remove default settings in CSS. You can do this in various ways. In my case, define `createGlobalStyle` in  `App.tsx`
+   and paste the code of [this](https://meyerweb.com/eric/tools/css/reset/).
+8. Make `styled.d.ts` file in `styles` folder and declare module `'styled-components'` and add interface `DefaultTheme`.
+9. Make `theme.ts` file in `styles` folder and define colors in themes using `DefaultTheme`  you want to use. In my
+   case, I defined `darkTheme` and `lightTheme` .
+10. Make `global.d.ts` file in `src` folder and declare modules to use image files.
+11. Show off your CSS skills! Make styled components in the files you need. If you have to make a identical styled
+    components in different files, make `styles.tsx` file in `styles` folder, put them there, and import them where you
+    need.
+
+#### Result of Coloring
+
+> Please don't just copy my design or codes. That doesn't help you at all.
+
+![kanban-gif-1](/Users/gyeonghyeonkim/Downloads/kanban-gif-1.gif)
+
+![kanban-gif-2](/Users/gyeonghyeonkim/Downloads/kanban-gif-2.gif)
+
+### Deploy
+
+1. You can deploy your website in various ways. In my case, I deployed by publishing files to `gh-pages` branch on
+   GitHub.
+
+2. Make Repository on GitHub and push all the files.
+
+3. Install gh-pages via npm,  `npm install gh-pages --save-dev`.
+
+4. Go to `package.json`  and add `"homepage"`  right above the last curly brace.
+   Use `https://user-id-here.github.io/repository-name-here`
+
+1. ```json
+      },
+        "homepage": "https://codeisneverodd.github.io/practice-with-react-typescript-for-crypto-dictionary/"
+      }
+      ```
+
+5. Add `"deploy"` and `"predeploy"` to `script` in `package.json`.
+
+1. ```json
+      "scripts": {
+          "deploy": "gh-pages -d build",
+          "predeploy": "npm run build"
+        },
+      ```
+
+6. Finish deployment by entering `npm run deploy` in the console.
+
+#### Result of Deployment
+
+
+
+
