@@ -105,10 +105,8 @@
 #### Result of Coloring
 
 > Please don't just copy my design or codes. That doesn't help you at all.
-
-![kanban-gif-1](/Users/gyeonghyeonkim/Downloads/kanban-gif-1.gif)
-
-![kanban-gif-2](/Users/gyeonghyeonkim/Downloads/kanban-gif-2.gif)
+![kanban-gif-1](https://user-images.githubusercontent.com/54318460/158059935-1b70e0de-5435-4117-b7be-1c3025e1b140.gif)
+![kanban-gif-2](https://user-images.githubusercontent.com/54318460/158059940-c62d4529-26d5-4a58-81c2-29eef201e7ba.gif)
 
 ### Deploy
 
