@@ -1,30 +1,35 @@
-import React from 'react';
+import React from "react";
 import Router from "./Router";
-import {createGlobalStyle, ThemeProvider} from "styled-components";
-import {darkTheme} from "./styles/theme";
-import {Helmet, HelmetProvider} from "react-helmet-async"
+import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { darkTheme } from "./styles/theme";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 function App() {
-    return (
-        <ThemeProvider theme={darkTheme}>
-            <GlobalStyle/>
-            <HelmetProvider>
-                <Helmet>
-                    <title>Kanban Board</title>
-                    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-                    <link rel="preconnect" href="https://fonts.gstatic.com"/>
-                    <link
-                        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&family=Pacifico&display=swap"
-                        rel="stylesheet"/>
-                    <meta property="og:image"
-                          content="https://user-images.githubusercontent.com/54318460/157589231-f21fe1b0-c57f-4ef0-8c4e-0a108529d067.png"/>
-                    <meta property="og:description"
-                          content="🔭 Explore 30,000+ cryptos with their real-time price, chart, supplied amount, and more!!"/>
-                </Helmet>
-            </HelmetProvider>
-            <Router/>
-        </ThemeProvider>
-    );
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <GlobalStyle />
+      <HelmetProvider>
+        <Helmet>
+          <title>Kanban Board</title>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&family=Pacifico&display=swap"
+            rel="stylesheet"
+          />
+          <meta
+            property="og:image"
+            content="https://tva1.sinaimg.cn/large/e6c9d24egy1h07yud7uwdj21qe0qqwfm.jpg"
+          />
+          <meta
+            property="og:description"
+            content="📂  Kanban board with full drag-and-drop support!! Manage your work easily and simply 😎"
+          />
+        </Helmet>
+      </HelmetProvider>
+      <Router />
+    </ThemeProvider>
+  );
 }
 
 export default App;
@@ -65,8 +70,8 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     line-height: 1;
-    background-color: ${props => props.theme.bgColor};
-    color: ${props => props.theme.textColor};
+    background-color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.textColor};
     font-family: 'Noto Sans KR', sans-serif;
 
     &::-webkit-scrollbar {
@@ -93,4 +98,4 @@ const GlobalStyle = createGlobalStyle`
     border-spacing: 0;
   }
 
-`
+`;
