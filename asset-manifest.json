@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/practice-with-react-typescript-for-kanban-board/static/js/main.2731de07.js",
+    "main.js": "/practice-with-react-typescript-for-kanban-board/static/js/main.8c6fb42c.js",
     "static/media/bin.png": "/practice-with-react-typescript-for-kanban-board/static/media/bin.849f6833718e12356ecd.png",
     "index.html": "/practice-with-react-typescript-for-kanban-board/index.html",
-    "main.2731de07.js.map": "/practice-with-react-typescript-for-kanban-board/static/js/main.2731de07.js.map"
+    "main.8c6fb42c.js.map": "/practice-with-react-typescript-for-kanban-board/static/js/main.8c6fb42c.js.map"
   },
   "entrypoints": [
-    "static/js/main.2731de07.js"
+    "static/js/main.8c6fb42c.js"
   ]
 }
