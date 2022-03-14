@@ -136,6 +136,7 @@
       ```
 
 6. Finish deployment by entering `npm run deploy` in the console.
+> Don't forget to add `basename={process.env.PUBLIC_URL}` in your BrowserRouter
 
 #### Result of Deployment
 
