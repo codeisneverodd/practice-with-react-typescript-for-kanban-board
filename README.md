@@ -1,7 +1,6 @@
 # Kanban Board
 
-[![thumbnail-kanban](https://user-images.githubusercontent.com/54318460/158707405-651b24b1-3d25-4a28-aeaa-d6d219f0bf65.png)
-](https://codeisneverodd.github.io/practice-with-react-typescript-for-kanban-board/)
+[![thumbnail-kanban](https://user-images.githubusercontent.com/54318460/158707753-41629889-e4d5-476b-a254-3927d62533e2.png)](https://codeisneverodd.github.io/practice-with-react-typescript-for-kanban-board/)
 
 ## Table of Contents
 
